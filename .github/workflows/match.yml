@@ -1,0 +1,32 @@
+name: Halite Match
+run-name: ${{ github.event.inputs.id }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      id:
+        description: "Run identifier"
+        required: true
+        type: string
+      map-size:
+        description: "Map size"
+        required: true
+        type: string
+      bots:
+        description: "Bot information as JSON array"
+        required: true
+        type: string
+
+jobs:
+  run-match:
+    name: Run Match
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install halite
+        run: |
+          install --mode +x -t /usr/local/bin/ bin/$(uname)-$(arch)/halite
+          halite
+      - name: Run match
+        run: |
+          python match.py '${{ github.event.inputs.map-size }}' '${{ github.event.inputs.bots }}'
