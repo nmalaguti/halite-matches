@@ -1,4 +1,9 @@
 .idea/
+*.hlt
+*.hlt.gz
+*.log
+*.log.gz
+*.tar.xz
 
 # Created by https://www.toptal.com/developers/gitignore/api/c
 # Edit at https://www.toptal.com/developers/gitignore?templates=c

@@ -26,4 +26,10 @@ jobs:
       - name: Install halite
         run: install --mode +x -t /usr/local/bin/ bin/$(uname)-$(arch)/halite
       - name: Run match
-        run: python match.py '${{ github.event.inputs.map-size }}' '${{ github.event.inputs.bots }}'
+        run: python match.py '${{ github.event.inputs.id }}' '${{ github.event.inputs.map-size }}' '${{ github.event.inputs.bots }}'
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: result
+          path: ${{ github.event.inputs.id }}.tar.xz
+          retention-days: 5
