@@ -24,9 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install halite
-        run: |
-          install --mode +x -t /usr/local/bin/ bin/$(uname)-$(arch)/halite
-          halite
+        run: install --mode +x -t /usr/local/bin/ bin/$(uname)-$(arch)/halite
       - name: Run match
-        run: |
-          python match.py '${{ github.event.inputs.map-size }}' '${{ github.event.inputs.bots }}'
+        run: python match.py '${{ github.event.inputs.map-size }}' '${{ github.event.inputs.bots }}'
