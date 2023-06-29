@@ -131,9 +131,7 @@ def run_match(bots, map_size, match_id) -> Match:
 def pull(bots):
     for bot in bots:
         print(shlex.join(["docker", "pull", bot["docker-image"]]), file=sys.stderr)
-        subprocess.run(
-            ["docker", "pull", bot["docker-image"]], stdout=sys.stderr
-        )
+        subprocess.run(["docker", "pull", bot["docker-image"]], stdout=sys.stderr)
 
 
 def main():
