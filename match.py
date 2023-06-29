@@ -123,7 +123,7 @@ def pull(bots):
     for bot in bots:
         print(shlex.join(["docker", "pull", bot["docker-image"]]), file=sys.stderr)
         subprocess.run(
-            ["docker", "pull", bot["docker-image"]], check=True, stdout=sys.stderr
+            ["docker", "pull", bot["docker-image"]], stdout=sys.stderr
         )
 
 
