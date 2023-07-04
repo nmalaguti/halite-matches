@@ -4,3 +4,4 @@
 *.log
 *.log.gz
 *.tar.xz
+.DS_Store

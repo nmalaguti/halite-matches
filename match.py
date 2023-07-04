@@ -10,6 +10,8 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 from typing import List, Optional
 
+import requests
+
 
 @dataclass
 class Result:
@@ -156,6 +158,14 @@ def main():
     for result in match.match_results:
         if result.error_log:
             os.remove(result.error_log)
+
+    api_token = os.environ["API_TOKEN"]
+    r = requests.post(
+        "https://halite-tournament.fly.dev/api/v1/match-result/",
+        files={"result": open(f"{match.id}.tar.xz", "rb")},
+        headers={"Authorization": f"Token {api_token}"},
+    )
+    r.raise_for_status()
 
 
 if __name__ == "__main__":
