@@ -160,12 +160,14 @@ def main():
             os.remove(result.error_log)
 
     api_token = os.environ["API_TOKEN"]
+    print(f"Uploading match result file {match.id}.tar.xz", file=sys.stderr)
     r = requests.post(
         "https://halite-tournament.fly.dev/api/v1/match-result/",
         files={"result": open(f"{match.id}.tar.xz", "rb")},
         headers={"Authorization": f"Token {api_token}"},
     )
     r.raise_for_status()
+    print(f"Upload complete", file=sys.stderr)
 
 
 if __name__ == "__main__":
