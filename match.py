@@ -39,7 +39,7 @@ class Match:
     width: int
     height: int
     match_results: List[MatchResult]
-    workflow_url: Optional[str]
+    workflow_run_id: int
 
 
 @dataclass
@@ -112,12 +112,7 @@ def run_match(bots, map_size, match_id) -> Match:
             )
         )
 
-    workflow_url = None
-    repository = os.environ.get("GITHUB_REPOSITORY")
-    run_id = os.environ.get("GITHUB_RUN_ID")
-
-    if repository and run_id:
-        workflow_url = f"https://github.com/{repository}/actions/runs/{run_id}"
+    workflow_run_id = int(os.environ.get("GITHUB_RUN_ID"), 0)
 
     return Match(
         match_id,
@@ -127,7 +122,7 @@ def run_match(bots, map_size, match_id) -> Match:
         output.width,
         output.height,
         match_results,
-        workflow_url,
+        workflow_run_id,
     )
 
 
