@@ -170,7 +170,7 @@ def main():
             try:
                 r.raise_for_status()
             except requests.HTTPError as e:
-                if i >= 4:
+                if i >= 4 or r.status_code < 500:
                     raise
 
                 print(f"Received error {e}, sleeping and retrying...")
