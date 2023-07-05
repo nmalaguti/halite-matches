@@ -6,6 +6,7 @@ import shlex
 import subprocess
 import sys
 import tarfile
+import time
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from typing import List, Optional
@@ -161,12 +162,25 @@ def main():
 
     api_token = os.environ["API_TOKEN"]
     print(f"Uploading match result file {match.id}.tar.xz", file=sys.stderr)
-    r = requests.post(
-        "https://halite-tournament.fly.dev/api/v1/match-result/",
-        files={"result": open(f"{match.id}.tar.xz", "rb")},
-        headers={"Authorization": f"Token {api_token}"},
-    )
-    r.raise_for_status()
+
+    for i in range(5):
+        r = requests.post(
+            "https://halite-tournament.fly.dev/api/v1/match-result/",
+            files={"result": open(f"{match.id}.tar.xz", "rb")},
+            headers={"Authorization": f"Token {api_token}"},
+        )
+        if r.ok:
+            break
+        else:
+            try:
+                r.raise_for_status()
+            except requests.HTTPError as e:
+                if i >= 4:
+                    raise
+
+                print(f"Received error {e}, sleeping and retrying...")
+                time.sleep(10)
+
     print(f"Upload complete", file=sys.stderr)
 
 
