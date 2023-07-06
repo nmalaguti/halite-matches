@@ -85,7 +85,12 @@ def parse_output(result, num_bots) -> Output:
 def run_match(bots, map_size, match_id) -> Match:
     args = []
     for bot in bots:
-        args.extend([f"docker run --rm -i -c=1024 {bot['docker-image']}", bot["name"]])
+        args.extend(
+            [
+                f"docker run --rm -i --cpus='0.45' --network=none --memory=1g {bot['docker-image']}",
+                bot["name"],
+            ]
+        )
 
     halite_command = ["halite", "-q", "-d", map_size, "-o", *args]
     print(shlex.join(halite_command), file=sys.stderr)
