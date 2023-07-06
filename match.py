@@ -8,7 +8,7 @@ import sys
 import tarfile
 import time
 from dataclasses import asdict, dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Optional
 
 import requests
@@ -116,7 +116,7 @@ def run_match(bots, map_size, match_id) -> Match:
 
     return Match(
         match_id,
-        datetime.utcnow().isoformat(),
+        datetime.now(timezone.utc).isoformat(),
         output.hlt_file,
         output.seed,
         output.width,
