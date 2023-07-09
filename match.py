@@ -87,7 +87,7 @@ def run_match(bots, map_size, match_id) -> Match:
     for bot in bots:
         args.extend(
             [
-                f"docker run --rm -i --cpus='0.45' --network=none --memory=1g {bot['docker-image']}",
+                f"docker run --rm -i --cpus='0.32' --network=none --memory=1g {bot['docker-image']}",
                 bot["name"],
             ]
         )
